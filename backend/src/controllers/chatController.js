@@ -11,7 +11,7 @@ export async function getStreamToken(req, res) {
             userImage: req.user.image,
         });
     } catch (error) {
-        conosle.log("Error in getStreamToken controller: ", error.message);
+        conosle.error("Error in getStreamToken controller: ", error.message);
         res.status(500).json({ message: "Internal Server Error" });
 
     }
