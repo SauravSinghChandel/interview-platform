@@ -36,7 +36,9 @@ export async function createSession(req, res) {
             await channel.create();
 
         } catch (error) {
-            await Session.findOneAndDelete(session._id);
+            await Session.findByIdAndDelete(session._id);
+            console.error("Error creating Stream resources: ", error);
+            return res.status(500).json({ message: "Failed to create session resources" })
         }
 
         res.status(201).json({ session })
@@ -109,7 +111,7 @@ export async function joinSession(req, res) {
         }
 
         if (session.status !== "active") {
-            return res.status(400).json({message: "Cannot join a completed session"})
+            return res.status(400).json({ message: "Cannot join a completed session" })
         }
 
         if (session.host.toString() === userId.toString()) {
