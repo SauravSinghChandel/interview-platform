@@ -20,6 +20,16 @@ function DashboardPage() {
     const { data: activeSessionsData, isLoading: loadingActiveSessions } = useActiveSessions();
     const { data: recentSessionsData, isLoading: loadingRecentSessions } = useMyRecentSessions();
 
+    const [showToast, setShowToast] = useState(false);
+    const triggerComingSoonToast = () => {
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 2500);
+    };
+
+    const tempHandleCreateRoom = () => {
+        setShowCreateModal(false);
+        navigate(`/session`)
+    }
 
     const handleCreateRoom = () => {
         if (!roomConfig.problem || !roomConfig.difficulty) return;
@@ -72,7 +82,7 @@ function DashboardPage() {
                 onClose={() => setShowCreateModal(false)}
                 roomConfig={roomConfig}
                 setRoomConfig={setRoomConfig}
-                onCreateRoom={handleCreateRoom}
+                onCreateRoom={tempHandleCreateRoom}
                 isCreating={createSessionMutation.isPending}
             />
         </>
