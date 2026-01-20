@@ -1,3 +1,6 @@
+console.log("BOOT_MARKER: server.js loaded");
+process.on("uncaughtException", (e) => console.error("uncaughtException: ", e))
+process.on("unhandledRejection", (e) => console.error("unhandledRejection: ", e))
 import express from "express";
 import path from "path";
 import cors from "cors";
@@ -47,7 +50,10 @@ const PORT = ENV.PORT || 3000;
 
 async function start() {
     try {
-        
+        console.log("Starting with port: ", PORT);
+        console.log("NODE_ENV: ", ENV.NODE_ENV);
+        console.log("Has DB URL: ", Boolean(ENV.DB_URL));
+
         app.listen(PORT, "0.0.0.0", async () => {
             await connectDB();
             console.log("Server is running on port:", PORT)
